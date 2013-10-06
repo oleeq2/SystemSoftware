@@ -1,5 +1,5 @@
 section .data  
-    src_array dd 2,34,-21,-4,21,-5,1,-2
+    src_array dd 2h,34h,-21h,-4h,21h,-5h,1h,-2h
     out_array: times 8 dd 0
     num dd 0x08
     last resd 1
@@ -7,36 +7,33 @@ segment .text
 global main
 main:
 
-    xor sp,sp
-    
-    
     lea ebx,[src_array]
     mov edx,[num]
-    dec dx
+    dec edx
     sal dx,2
     add ebx,edx
     mov eax,[ebx]
 
     mov [last],eax
     mov ecx,[num]
-    dec cx
-    xor ax,ax
+    dec ecx
+    xor eax,eax
 
 
 ex_lp:
-    push cx
-    lea bx,[src_array]
+    push ecx
+    lea ebx,[src_array]
     mov ecx,[num]
-    dec cx
+    dec ecx
     ns_lp:
         mov eax,[ebx]
         cmp eax,[ebx+4]
         jnge end_ns_lp
         push eax
         mov eax,[ebx+4]
-        mov [ebx],ax
+        mov [ebx],eax
         pop eax
-        mov [ebx+4],ax
+        mov [ebx+4],eax
     end_ns_lp:
         add ebx,4
         dec ecx
@@ -61,8 +58,8 @@ mov ebx,[num]
 idiv ebx 
 
 
-mov edx,[num]
-mov ecx,edx
+mov edx,ebx ;num to edx
+mov ecx,ebx ;num to ecx
 sal edx,2
 lea ebx,[src_array]
 add ebx,edx
@@ -70,12 +67,12 @@ add ebx,edx
 xor esi,esi
 
 lp:
-    cmp edx,[ebx]
+    mov edi,[ebx]
+    cmp edx,edi
     jg end_lp
-    cmp eax,[ebx]
+    cmp eax,edi
     jg end_lp
 
-    mov edi,[ebx]
     push edi 
     inc esi
     end_lp:
