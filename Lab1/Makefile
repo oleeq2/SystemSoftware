@@ -1,5 +1,5 @@
 ASM=nasm
-SRC=main_32bit.asm 
+SRC=main_16bit_elf.asm main_32bit.asm 
 LST=bin/$(SRC:.asm=.lst)
 OBJ=bin/$(SRC:.asm=.o)
 EXEC=bin/$(SRC:.asm=)
