@@ -1,10 +1,9 @@
 sys_exit equ 0x1
 section .data
 out_str: times 12 db 0
-src_srt: 
+src_str: dd 0q310 
 section .text
 extern _proc
-global out_str
 global main
 main:
     lea eax,[out_str]

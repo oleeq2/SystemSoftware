@@ -1,32 +1,54 @@
 segment .text
 global _proc
-extern out_str
 _proc:
     
     pop eax
     pop edx
     pop ebx
+addr_load:
+    add ebx,11
 
     push eax
     mov eax,edx
-    mov ecx,12
-st:
+    mov ecx,11
+    xor dl,dl
+
+ext_st:
     push ecx
-    mov ecx,3
-    xor edx,edx
-    sal eax,1
-    jnc zero
-    inc edx
-zero:
-    sal edx,1
-    dec ecx
+    mov ch,3
+    xor cl,cl
+    xor dh,dh
+
+    add cl,dl
+    add cl,2
+
+st:
+    sal dh,1
+    xor esi,esi
+    inc esi
+    sal esi,cl
+    push eax
+    
+    and eax,esi
+    je zero
+    inc dh
+    zero:
+
+    pop eax
+
+    dec cl
+    dec ch
     jne st
-    add edx,0x30
-    mov ebx,edx
-    inc ebx
+
+    add dh,0x30
+    add dl,3
+pr:
+    mov [ebx],dh
+
+    dec ebx
     pop ecx
     dec ecx
-jne st
+    jne ext_st
     
     cmp eax,0x0
     je norm 
