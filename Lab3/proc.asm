@@ -50,10 +50,5 @@ pr:
     dec ecx
     jne ext_st
     
-    cmp eax,0x0
-    je norm 
-    jmp ex
-norm:
     mov eax,0x0
-ex:
     ret
