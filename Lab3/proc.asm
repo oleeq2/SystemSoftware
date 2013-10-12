@@ -6,11 +6,11 @@ _proc:
     pop edx
     pop ebx
 addr_load:
-    add ebx,11
+    add ebx,9
 
     push eax
     mov eax,edx
-    mov ecx,11
+    mov ecx,10
     xor dl,dl
 
 ext_st:
@@ -50,5 +50,6 @@ pr:
     dec ecx
     jne ext_st
     
+end_pr:
     mov eax,0x0
     ret

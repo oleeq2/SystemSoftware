@@ -1,6 +1,6 @@
 sys_exit equ 0x1
 section .data
-out_str: times 12 db 0
+out_str: times 10 db 0
 src_str: dd 1111_1111_1111_1111_1111_1111_1111_1111b
 section .text
 extern _proc
