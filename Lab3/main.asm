@@ -1,22 +1,24 @@
+global out_str
+extern out_in_oct
 section .data
-src_num dd 110_111_101_001_100_110_011_111_110_111_11b 
-out_str: times 11 db 0
+out_str: times 12 db 0
+num1 dw 0xFFFF
+num2 dw 0x0DCF
 
-section .text 
+section .code
 
-extern _proc
+..start:
+    mov ax,data
+    mov ds,ax
+    mov es,ax
 
-global main
-main:
+    lea ax,[num2]
+    push ax
 
-    lea eax,[out_str]
-    push eax
-    mov eax,[src_num]
-    push eax
+    mov ax,[num1]
+    push ax
 
-    call _proc
+    call out_in_oct
 
-ext:
-    mov eax,0x1
-    mov ebx,0x0
-    int 80h
+    mov ax,0x4c00
+    int 0x21

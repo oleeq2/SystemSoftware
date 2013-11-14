@@ -1,37 +1,40 @@
-section .text
-global _proc
-_proc:
-    pop ecx
-    pop eax
-    pop esi
+extern out_str
+global out_in_oct
 
-    push ecx 
-    mov cl,31
-lp:
-    mov bh,3
-    xor ch,ch
-    ns_lp:
-        push eax
+section .code
+    
+out_in_oct:
+    mov si,sp
+    mov di,out_str
+    mov ax,[ss:si+2]
+    push ax
 
-        mov edx,1
-        sal edx,cl
-        dec cl
-        and eax,edx
-        je en
-        inc ch
-    en:
-        cmp bh,1
-        je een
-        sal ch,1
-    een:
-        pop eax
-        dec bh
-        jne ns_lp
-pr_sym:
-    add ch,0x30
-    mov [esi],ch
-    inc esi
-    cmp cl,0
-    jne lp
+    mov bx,0
 
+    lp:
+        pop dx
+        push dx
+        shr dx,cl
+
+        and dl,7
+        add dl,30h
+
+        mov [di],dl
+        inc di
+
+    add cx,3
+    cmp cx,0xf
+    jl lp
+    
+    cmp bl,0
+    jne end_p
+
+    mov si,[ss:si+4]
+    mov ax,[si]
+    push ax
+    mov bl,1
+    mov cx,0
+    jmp lp
+
+end_p:
     ret
